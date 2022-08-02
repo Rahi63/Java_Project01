@@ -6,7 +6,7 @@ import java.util.*;
 
 public class LockedMe01 {
 	
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args){
 		
 		Scanner scan = new Scanner(System.in);
 		int choice = -1;
@@ -61,9 +61,7 @@ public class LockedMe01 {
 				break;
 			case 0: 
 				System.out.println("You exit from application");
-				return;
-			
-			
+				return;			
 			}
 			
 		}while(choice != 0);
@@ -71,48 +69,58 @@ public class LockedMe01 {
 
 	}
 		
-	public static void addFile() throws IOException {
+	public static void addFile() {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Please enter File name: ");
 		String name = sc.nextLine();
 		
-        File fileObj = new File("D:\\Java_workspace\\Archive_Files\\\"",name);
-        if (fileObj.createNewFile()) {
-            System.out.println("File created: " + fileObj.getName());
-        } else {
-            System.out.println("File Exists Already");
-        }
-        sc.close();
+		try {
+			File fileObj = new File("D:\\Java_workspace\\Archive_Files", name);
+	        if (fileObj.createNewFile()) {
+	            System.out.println("File created: " + fileObj.getName());
+	        } else {
+	            System.out.println("File Exists Already");
+	        }
+		}catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+        
+        
 	}
 	
-	public static void deleteFile() throws Exception {
+	public static void deleteFile() {
 		boolean success = false;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter file name to be created: ");
 		String filename = sc.nextLine();
-		
-		File file = new File("D:\\Java_workspace\\Archive_Files\\", filename);
-		if(file.exists())
-			System.out.println("File already exists");
-		else
-		{
-			//System.out.println("No such file exists, creating now");
-			success = file.createNewFile();
-			if(success)
-				System.out.println(filename + " successfully created");
+		try {
+			File file = new File("D:\\Java_workspace\\Archive_Files", filename);
+			if(file.exists())
+				System.out.println("File already exists");
 			else
-				System.out.println("Failed to create new file:"+ filename);
+			{			
+				success = file.createNewFile();
+				if(success)
+					System.out.println(filename + " successfully created");
+				else
+					System.out.println("Failed to create new file:"+ filename);
+			}
+		}catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
 		}
 		
-	    sc.close();
+		
+	    
 	}
 	
 	public static void searchFile() {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Please enter File name to search: ");
 		String name = sc.nextLine();
-			
-			File fileObj = new File("D:\\Java_workspace\\Archive_Files\\",name);
+		try {	
+			File fileObj = new File("D:\\Java_workspace\\Archive_Files",name);
 		    if (fileObj.exists()) {
 		      System.out.println("File_Name: " + fileObj.getName());
 		      System.out.println("File_Readable " + fileObj.canRead());
@@ -122,30 +130,17 @@ public class LockedMe01 {
 		    else {
 		    System.out.println("File not exist");
 		   }
-
-	    sc.close();
+		}catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+	    
 	}
 	
-	public static void sortFile() {
-		File dir = new File("D:\\Java_workspace\\Archive_Files\\");
 
-	    File[] files = dir.listFiles();
-
-	    Arrays.sort(files, (f1, f2) -> f1.compareTo(f2));
-
-	      for (File file : files) {
-	         if (!file.isHidden()) {
-	            if (file.isDirectory()) {
-	               System.out.println("DIR \t" + file.getName());
-	            } else {
-	               System.out.println("FILE\t" + file.getName());
-	            }
-	         }
-	      }
-	   }
-	
 	public static void displayFile() {
-		File folder = new File("D:\\Java_workspace\\Archive_Files\\");
+		try {
+		File folder = new File("D:\\Java_workspace\\Archive_Files");
 		
 		File[] listOfFiles = folder.listFiles();
 
@@ -156,5 +151,9 @@ public class LockedMe01 {
 				System.out.println("There is No file");
 	
 		}
+		}catch(Exception ex)
+			{
+			System.out.println(ex.getMessage());
+			}
 	}
 }
